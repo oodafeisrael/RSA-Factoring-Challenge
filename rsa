@@ -1,48 +1,47 @@
 #!/usr/bin/python3
-
 import sys
 
-def is_prime(num):
-    if num <= 1:
-        return False
-    if num <= 3:
-        return True
-    if num % 2 == 0 or num % 3 == 0:
-        return False
-    i = 5
-    while i * i <= num:
-        if num % i == 0 or num % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+"""
+File_name: rsa
+Created: 28th of May, 2023
+Auth: David James Taiye (Official0mega)
+Size: undefined
+Project: RSA-Factoring-Challenge
+Status: submitted.
+"""
 
-def factorize_number(n):
-    if n <= 1 or is_prime(n):
-        return []
 
-    for i in range(2, n):
-        if n % i == 0 and is_prime(i) and is_prime(n // i):
-            return [i, n // i]
-    return []
+def factorization():
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python rsa.py <input_file>")
-        return
-
-    input_filename = sys.argv[1]
+    """
+    # RSA Laboratories states that: for each RSA number n
+    # ...there exist prime numbers p and q such that
+    # n = p × q. The problem is to find these two primes, given only n.
+    # VARIABLE(" "):
+    # factorize(int) Factorize all the things!
+    # This task is the same as task 0, except:
+    # .....p and q are always prime numbers
+    # .....There is only one number in the files
+    # .....How far can you go in less than 5 second?
+    """
     try:
-        with open(input_filename, 'r') as file:
-            for line in file:
-                n = int(line.strip())
-                factors = factorize_number(n)
-                if factors:
-                    p, q = factors
-                    print(f"{n} = {p} * {q}")
-                else:
-                    print(f"No prime factors found for {n}")
-    except FileNotFoundError:
-        print(f"Input file '{input_filename}' not found.")
+        files = sys.argv[1]
+        with open(files) as f:
+            for numbs in f:
+                numbs = int(numbs)
+                if numbs % 2 == 0:
+                    print("{}={}*{}".format(numbs, numbs // 2, 2))
+                    continue
+                run = 3
+                while run < numbs // 2:
+                    if numbs % run == 0:
+                        print("{}={}*{}".format(numbs, numbs // run, run))
+                        break
+                    run = run + 2
+                if run == (numbs // 2) + 1:
+                    print("{}={}*{}".format(numbs, numbs, 1))
+    except (IndexError):
+        pass
 
-if __name__ == "__main__":
-    main()
+
+factorization()
